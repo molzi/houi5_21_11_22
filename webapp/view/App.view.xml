@@ -8,7 +8,7 @@
 							<items>
 								<HBox>
 									<items>
-										<Label id="app_label_customerId" text="Kundennummer" labelFor="app_text_customerid"/>
+										<Label id="app_label_customerid" text="Kundennummer" labelFor="app_text_customerid"/>
 										<Text id="app_text_customerid" text="1000001"/>
 									</items>
 								</HBox>
