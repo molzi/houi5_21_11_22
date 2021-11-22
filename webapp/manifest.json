@@ -14,7 +14,6 @@
 			"version": "1.38.11"
 		}
 	},
-
 	"sap.ui": {
 		"technology": "UI5",
 		"icons": {
@@ -31,7 +30,6 @@
 			"phone": true
 		}
 	},
-
 	"sap.ui5": {
 		"flexEnabled": false,
 		"rootView": {
@@ -58,6 +56,18 @@
 				"settings": {
 					"bundleName": "at.clouddna.training00.FioriDeepDive.i18n.i18n"
 				}
+			},
+			"genderModel": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"uri": "data/gender.json",
+				"preload": false
+			},
+			"": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"uri": "data/customers.json",
+				"preload": false
 			}
 		},
 		"resources": {

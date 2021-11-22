@@ -1,47 +1,36 @@
-<mvc:View controllerName="at.clouddna.training00.FioriDeepDive.controller.App" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+<mvc:View controllerName="at.clouddna.training00.FioriDeepDive.controller.App" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true" xmlns:l="sap.ui.layout" xmlns="sap.m" xmlns:core="sap.ui.core">
 	<Shell id="shell">
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}">
 					<content>
-						<VBox>
-							<items>
-								<HBox>
+						<f:SimpleForm id="app_simpleform" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+							labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
+							singleContainerFullSize="false">
+							<f:content>
+								<Label id="app_label_customerid" text="{i18n>app.customerid}" labelFor="app_text_customerid"/>
+								<Input id="app_text_customerid" value="{/customerid}"/>
+								<Label id="app_label_firstname" text="{i18n>app.firstname}" labelFor="app_text_firstname"/>
+								<Input id="app_text_firstname" value="{/firstname}"/>
+								<Label id="app_label_lastname" text="{i18n>app.lastname}" labelFor="app_text_lastname"/>
+								<Input id="app_text_lastname" value="{/lastname}"/>
+								<Label id="app_label_title" text="{i18n>app.title}" labelFor="app_text_title"/>
+								<Input id="app_text_title" value="{/title}"/>
+								<Label id="app_label_gender" text="{i18n>app.gender}" labelFor="app_select_gender"/>
+								<Select id="app_select_gender" items="{genderModel>/genders}" selectedKey="{/gender}">
 									<items>
-										<Label id="app_label_customerid" text="Kundennummer" labelFor="app_text_customerid"/>
-										<Text id="app_text_customerid" text="1000001"/>
+										<core:Item key="{genderModel>}" text="{genderModel>}"/>
 									</items>
-								</HBox>
-								<HBox>
-									<Label id="app_label_firstname" text="Vorname" labelFor="app_text_firstname"/>
-									<Text id="app_text_firstname" text="Maximilian"/>
-								</HBox>
-								<HBox>
-									<Label id="app_label_lastname" text="Nachname" labelFor="app_text_lastname"/>
-									<Text id="app_text_lastname" text="Olzinger"/>
-								</HBox>
-								<HBox>
-									<Label id="app_label_title" text="Titel" labelFor="app_text_title"/>
-									<Text id="app_text_title" text=""/>
-								</HBox>
-								<HBox>
-									<Label id="app_label_gender" text="Geschlecht" labelFor="app_text_gender"/>
-									<Text id="app_text_gender" text="männlich"/>
-								</HBox>
-								<HBox>
-									<Label id="app_label_email" text="EMail" labelFor="app_text_email"/>
-									<Text id="app_text_email" text="mo@clouddna.at"/>
-								</HBox>
-								<HBox>
-									<Label id="app_label_phone" text="Telefon" labelFor="app_text_phone"/>
-									<Text id="app_text_phone" text="93939393939"/>
-								</HBox>
-								<HBox>
-									<Label id="app_label_webiste" text="Website" labelFor="app_text_website"/>
-									<Text id="app_text_website" text="www.clouddna.at"/>
-								</HBox>
-							</items>
-						</VBox>
+								</Select>
+								<Label id="app_label_email" text="{i18n>app.email}" labelFor="app_text_email"/>
+								<Input id="app_text_email" value="{/email}"/>
+								<Label id="app_label_phone" text="{i18n>app.phone}" labelFor="app_text_phone"/>
+								<Input id="app_text_phone" value="{/phone}"/>
+								<Label id="app_label_webiste" text="{i18n>app.website}" labelFor="app_text_website"/>
+								<Input id="app_text_website" value="{/website}"/>
+							</f:content>
+						</f:SimpleForm>
 					</content>
 				</Page>
 			</pages>
