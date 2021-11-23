@@ -89,6 +89,12 @@
 				"name": "RouteApp",
 				"pattern": "RouteApp",
 				"target": ["TargetApp"]
+			}, {
+				"name": "Customer",
+				"pattern": "",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["Customer"]
 			}],
 			"targets": {
 				"TargetApp": {
@@ -97,6 +103,11 @@
 					"clearControlAggregation": false,
 					"viewId": "App",
 					"viewName": "App"
+				},
+				"Customer": {
+					"viewType": "XML",
+					"viewName": "Customer",
+					"controlAggregation": "pages"
 				}
 			}
 		}
