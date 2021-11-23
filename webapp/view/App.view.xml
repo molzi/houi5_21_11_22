@@ -3,35 +3,17 @@
 	<Shell id="shell">
 		<App id="app">
 			<pages>
-				<Page id="page" title="{i18n>title}">
-					<content>
-						<f:SimpleForm id="app_simpleform" editable="true" layout="ResponsiveGridLayout" labelSpanXL="3" labelSpanL="3" labelSpanM="3"
-							labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1"
-							singleContainerFullSize="false">
-							<f:content>
-								<Label id="app_label_customerid" text="{i18n>app.customerid}" labelFor="app_text_customerid"/>
-								<Input id="app_text_customerid" value="{/customerid}"/>
-								<Label id="app_label_firstname" text="{i18n>app.firstname}" labelFor="app_text_firstname"/>
-								<Input id="app_text_firstname" value="{/firstname}"/>
-								<Label id="app_label_lastname" text="{i18n>app.lastname}" labelFor="app_text_lastname"/>
-								<Input id="app_text_lastname" value="{/lastname}"/>
-								<Label id="app_label_title" text="{i18n>app.title}" labelFor="app_text_title"/>
-								<Input id="app_text_title" value="{/title}"/>
-								<Label id="app_label_gender" text="{i18n>app.gender}" labelFor="app_select_gender"/>
-								<Select id="app_select_gender" items="{genderModel>/genders}" selectedKey="{/gender}">
-									<items>
-										<core:Item key="{genderModel>}" text="{genderModel>}"/>
-									</items>
-								</Select>
-								<Label id="app_label_email" text="{i18n>app.email}" labelFor="app_text_email"/>
-								<Input id="app_text_email" value="{/email}"/>
-								<Label id="app_label_phone" text="{i18n>app.phone}" labelFor="app_text_phone"/>
-								<Input id="app_text_phone" value="{/phone}"/>
-								<Label id="app_label_webiste" text="{i18n>app.website}" labelFor="app_text_website"/>
-								<Input id="app_text_website" value="{/website}"/>
-							</f:content>
-						</f:SimpleForm>
-					</content>
+				<Page id="page" title="{i18n>title}" showFooter="true">
+					<content></content>
+					<footer>
+						<Toolbar>
+							<content>
+								<ToolbarSpacer/>
+								<Button id="app_button_edit" press="onEditPress" text="{i18n>button.edit}" type="Emphasized" visible="{= !${editModel>/editmode}}"/>
+								<Button id="app_button_save" press="onSavePress" text="{i18n>button.save}" type="Accept" visible="{editModel>/editmode}"/>
+							</content>
+						</Toolbar>
+					</footer>
 				</Page>
 			</pages>
 		</App>
