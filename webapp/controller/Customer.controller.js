@@ -46,14 +46,16 @@ sap.ui.define([
 			if (this._fragmentList[sFragmentName]) {
 				oPage.insertContent(this._fragmentList[sFragmentName]);
 			} else {
-				Fragment.load({
+				let oSimpleForm = await Fragment.load({
 					id: this.getView().createId(sFragmentName),
 					name: "at.clouddna.training00.FioriDeepDive.view." + sFragmentName,
 					controller: this
-				}).then(function (oFragment) {
-					this._fragmentList[sFragmentName] = oFragment;
-					oPage.insertContent(oFragment);
-				}.bind(this));
+				});
+				oPage.insertContent(oSimpleForm)
+					// }).then(function (oFragment) {
+					// 	this._fragmentList[sFragmentName] = oFragment;
+					// 	oPage.insertContent(oFragment);
+					// }.bind(this));
 			}
 		}
 	});

@@ -40,6 +40,15 @@
         "version": "1.71.44"
       },
       "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/sap/opu/odata",
+      "target": {
+        "type": "destination",
+        "name": "FSD_100",
+        "entryPath": "/sap/opu/odata"
+      },
+      "description": "FSD"
     }
   ],
   "sendWelcomeFileRedirect": true

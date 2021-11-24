@@ -10,8 +10,17 @@
 		"title": "{{appTitle}}",
 		"description": "{{appDescription}}",
 		"sourceTemplate": {
-			"id": "ui5template.basicSAPUI5ApplicationProject",
-			"version": "1.38.11"
+			"id": "servicecatalog.connectivityComponentForManifest",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"ZHOUI5_CUSTOMER_SRV": {
+				"uri": "/sap/opu/odata/sap/ZHOUI5_CUSTOMER_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml"
+				}
+			}
 		}
 	},
 	"sap.ui": {
@@ -64,16 +73,22 @@
 				"preload": false
 			},
 			"": {
-				"type": "sap.ui.model.json.JSONModel",
-				"settings": {},
-				"uri": "data/customers.json",
-				"preload": false
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZHOUI5_CUSTOMER_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -85,17 +100,33 @@
 				"controlId": "app",
 				"clearControlAggregation": false
 			},
-			"routes": [{
-				"name": "RouteApp",
-				"pattern": "RouteApp",
-				"target": ["TargetApp"]
-			}, {
-				"name": "Customer",
-				"pattern": "",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["Customer"]
-			}],
+			"routes": [
+				{
+					"name": "RouteApp",
+					"pattern": "RouteApp",
+					"target": [
+						"TargetApp"
+					]
+				},
+				{
+					"name": "Main",
+					"pattern": "",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"Main"
+					]
+				},
+				{
+					"name": "Customer",
+					"pattern": "customer",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"Customer"
+					]
+				}
+			],
 			"targets": {
 				"TargetApp": {
 					"viewType": "XML",
@@ -107,6 +138,11 @@
 				"Customer": {
 					"viewType": "XML",
 					"viewName": "Customer",
+					"controlAggregation": "pages"
+				},
+				"Main": {
+					"viewType": "XML",
+					"viewName": "Main",
 					"controlAggregation": "pages"
 				}
 			}
