@@ -2,7 +2,14 @@
 	controllerName="at.clouddna.training00.FioriDeepDive.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page title="{i18n>title}" id="main_page">
 		<content>
-			<Table id="main_table" headerText="{i18n>main.table.title}" items="{/CustomerSet}">
+			<Table id="main_table" items="{/CustomerSet}">
+				<headerToolbar>
+					<Toolbar>
+						<Title text="{i18n>main.table.title}"/>
+						<ToolbarSpacer/>
+						<Button id="main_button_create" text="{i18n>button.add}" press="onNewCustomerPress"/>
+					</Toolbar>
+				</headerToolbar>
 				<columns>
 					<Column id="main_column_firstname">
 						<Text text="{i18n>app.firstname}"/>

@@ -15,6 +15,14 @@ sap.ui.define([
 
 		},
 
+		onNewCustomerPress: function (oEvent) {
+			let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+			oRouter.navTo("Customer", {
+				customerid: "create"
+			}, false);
+		},
+
 		onCustomerPress: function (oEvent) {
 			let oRouter = sap.ui.core.UIComponent.getRouterFor(this),
 				sCustomerId = oEvent.getSource().getBindingContext().sPath.split("'")[1];

@@ -3,15 +3,20 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"sap/ui/core/Fragment",
-	"at/clouddna/training00/FioriDeepDive/formatter/formatter"
-], function (Controller, JSONModel, MessageBox, Fragment, formatter) {
+	"at/clouddna/training00/FioriDeepDive/formatter/formatter",
+	"sap/ui/core/routing/History"
+], function (Controller, JSONModel, MessageBox, Fragment, formatter, History) {
 	"use strict";
 
 	return Controller.extend("at.clouddna.training00.FioriDeepDive.controller.Customer", {
+		//Properties
 		_fragmentList: {},
+		_sMode: "",
 
+		//Formatter
 		formatter: formatter,
 
+		//View initialization----------------------------------------------------------------------------------
 		onInit: function () {
 			let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.getRoute("Customer").attachPatternMatched(this._onPatternMatched, this);
@@ -25,9 +30,43 @@ sap.ui.define([
 
 			this.getView().setModel(oEditModel, "editModel");
 
-			this._showCustomerFragment("DisplayCustomer");
+			if (sCustomerId !== "create") {
+				this._sMode = "display";
+				this._showCustomerFragment("DisplayCustomer");
+				this.getView().bindElement("/CustomerSet(guid'" + sCustomerId + "')");
+			} else {
+				this._sMode = "create";
 
-			this.getView().bindElement("/CustomerSet(guid'" + sCustomerId + "')");
+				let createModel = new JSONModel({
+					Firstname: "",
+					Lastname: "",
+					AcademicTitle: "",
+					Gender: "",
+					Email: "",
+					Phone: "",
+					Website: ""
+				});
+
+				this.getView().setModel(createModel, "createModel");
+				oEditModel.setProperty("/editmode", true);
+
+				this._showCustomerFragment("CreateCustomer");
+			}
+		},
+
+		//Button Handler-------------------------------------------------------------------------
+
+		onNavBack: function () {
+			let oHistory = History.getInstance(),
+				sPreviousHash = oHistory.getPreviousHash();
+
+			if (sPreviousHash !== undefined) {
+				window.history.go(-1);
+			} else {
+				let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+
+				oRouter.navTo("Main", true);
+			}
 		},
 
 		onEditPress: function (oEvent) {
@@ -41,6 +80,8 @@ sap.ui.define([
 			MessageBox.information(JSON.stringify(oCustomer));
 
 		},
+
+		//Edit/Display toggle----------------------------------------------------------------------------
 
 		_toggleEdit: function (bEditMode) {
 			let oEditModel = this.getView().getModel("editModel");
