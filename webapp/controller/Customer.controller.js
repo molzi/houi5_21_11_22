@@ -69,15 +69,62 @@ sap.ui.define([
 			}
 		},
 
+		onCancelPress: function (oEvent) {
+			let oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+
+			MessageBox.confirm(oBundle.getText("dialog.cancel"), {
+				onClose: function (sAction) {
+					if (sAction === MessageBox.Action.OK) {
+						if (this._sMode === "create") {
+							this.onNavBack();
+						} else {
+							if (this.getView().getModel().hasPendingChanges()) {
+								this.getView().getModel().resetChanges();
+							}
+
+							this._toggleEdit(false);
+						}
+					}
+				}.bind(this)
+			});
+		},
+
 		onEditPress: function (oEvent) {
 			this._toggleEdit(true, {}, false);
 		},
 
 		onSavePress: function (oEvent) {
-			let oCustomer = this.getView().getModel().getData();
+			let oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
 
-			this._toggleEdit(false);
-			MessageBox.information(JSON.stringify(oCustomer));
+			if (this._sMode === "create") {
+				let oModel = this.getView().getModel(),
+					oCreateData = this.getView().getModel("createModel").getData();
+
+				oModel.create("/CustomerSet", oCreateData, {
+					success: function (oData, response) {
+						MessageBox.success(oBundle.getText("dialog.create.success"), {
+							onClose: function () {
+								this.onNavBack();
+							}.bind(this)
+						});
+					}.bind(this),
+					error: function (oError) {
+						MessageBox.error(oError.message, {
+							onClose: function () {
+								this.onNavBack();
+							}.bind(this)
+						});
+					}.bind(this)
+				});
+			} else {
+				if (this.getView().getModel().hasPendingChanges()) {
+					this.getView().getModel().submitChanges();
+					MessageBox.information(oBundle.getText("dialog.update.success"));
+				} else {
+
+				}
+				this._toggleEdit(false);
+			}
 
 		},
 
