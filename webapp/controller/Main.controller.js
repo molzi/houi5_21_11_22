@@ -7,7 +7,21 @@ sap.ui.define([
 	return Controller.extend("at.clouddna.training00.FioriDeepDive.controller.Main", {
 
 		onInit: function () {
+			let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.getRoute("Main").attachPatternMatched(this._onPatternMatched, this);
+		},
 
+		_onPatternMatched: function (oEvent) {
+
+		},
+
+		onCustomerPress: function (oEvent) {
+			let oRouter = sap.ui.core.UIComponent.getRouterFor(this),
+				sCustomerId = oEvent.getSource().getBindingContext().sPath.split("'")[1];
+
+			oRouter.navTo("Customer", {
+				customerid: sCustomerId
+			}, false);
 		},
 
 		onDeleteCustomerPress: function (oEvent) {
@@ -15,7 +29,7 @@ sap.ui.define([
 				oModel = this.getView().getModel(),
 				oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
 
-			MessageBox.confirm(oBundle.getText("dialog.delete"), {
+			MessageBox.confirm(oBundle.getText("dialog.delete", []), {
 				onClose: function (sAction) {
 					if (sAction === MessageBox.Action.OK) {
 						oModel.remove(sCustomerPath, {

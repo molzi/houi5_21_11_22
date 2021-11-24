@@ -2,25 +2,36 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
-	"sap/ui/core/Fragment"
-], function (Controller, JSONModel, MessageBox, Fragment) {
+	"sap/ui/core/Fragment",
+	"at/clouddna/training00/FioriDeepDive/formatter/formatter"
+], function (Controller, JSONModel, MessageBox, Fragment, formatter) {
 	"use strict";
 
 	return Controller.extend("at.clouddna.training00.FioriDeepDive.controller.Customer", {
 		_fragmentList: {},
 
+		formatter: formatter,
+
 		onInit: function () {
+			let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.getRoute("Customer").attachPatternMatched(this._onPatternMatched, this);
+		},
+
+		_onPatternMatched: function (oEvent) {
 			let oEditModel = new JSONModel({
-				editmode: false
-			});
+					editmode: false
+				}),
+				sCustomerId = oEvent.getParameter("arguments").customerid;
 
 			this.getView().setModel(oEditModel, "editModel");
 
 			this._showCustomerFragment("DisplayCustomer");
+
+			this.getView().bindElement("/CustomerSet(guid'" + sCustomerId + "')");
 		},
 
 		onEditPress: function (oEvent) {
-			this._toggleEdit(true);
+			this._toggleEdit(true, {}, false);
 		},
 
 		onSavePress: function (oEvent) {
@@ -46,16 +57,14 @@ sap.ui.define([
 			if (this._fragmentList[sFragmentName]) {
 				oPage.insertContent(this._fragmentList[sFragmentName]);
 			} else {
-				let oSimpleForm = await Fragment.load({
+				Fragment.load({
 					id: this.getView().createId(sFragmentName),
 					name: "at.clouddna.training00.FioriDeepDive.view." + sFragmentName,
 					controller: this
-				});
-				oPage.insertContent(oSimpleForm)
-					// }).then(function (oFragment) {
-					// 	this._fragmentList[sFragmentName] = oFragment;
-					// 	oPage.insertContent(oFragment);
-					// }.bind(this));
+				}).then(function (oFragment) {
+					this._fragmentList[sFragmentName] = oFragment;
+					oPage.insertContent(oFragment);
+				}.bind(this));
 			}
 		}
 	});
