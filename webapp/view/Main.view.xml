@@ -2,11 +2,8 @@
 	controllerName="at.clouddna.training00.FioriDeepDive.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page title="{i18n>main.title}" id="main_page">
 		<content>
-			<Table id="main_table" headerText="{i18n>main.table.title}" items="{/customers}">
+			<Table id="main_table" headerText="{i18n>main.table.title}" items="{/CustomerSet}">
 				<columns>
-					<Column id="main_column_customerid">
-						<Text text="{i18n>app.customerid}"/>
-					</Column>
 					<Column id="main_column_firstname">
 						<Text text="{i18n>app.firstname}"/>
 					</Column>
@@ -28,18 +25,21 @@
 					<Column id="main_column_website">
 						<Text text="{i18n>app.website}"/>
 					</Column>
+					<Column id="main_column_delete">
+						<Text text="{i18n>app.delete}"/>
+					</Column>
 				</columns>
 				<items>
 					<ColumnListItem>
 						<cells>
-							<ObjectIdentifier title="{customerid}"/>
-							<Text text="{firstname}"/>
-							<Text text="{lastname}"/>
-							<Text text="{title}"/>
-							<Text text="{gender}"/>
-							<Text text="{email}"/>
-							<Text text="{phone}"/>
-							<Link text="{website}" href="{website}" target="_blank"/>
+							<Text text="{Firstname}"/>
+							<Text text="{Lastname}"/>
+							<Text text="{AcademicTitle}"/>
+							<Text text="{Gender}"/>
+							<Text text="{Email}"/>
+							<Text text="{Phone}"/>
+							<Link text="{Website}" href="https://{Website}" target="_blank"/>
+							<Button press="onDeleteCustomerPress" icon="sap-icon://delete"/>
 						</cells>
 					</ColumnListItem>
 				</items>
