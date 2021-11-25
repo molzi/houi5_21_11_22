@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"at/clouddna/training00/FioriDeepDive/controller/App.controller"
+	"at/clouddna/training0/FioriDeepDive/controller/App.controller"
 ], function (Controller) {
 	"use strict";
 

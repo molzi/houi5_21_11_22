@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "at.clouddna.training00.FioriDeepDive.view.",
+		viewNamespace: "at.clouddna.training0.FioriDeepDive.view.",
 		autoWait: true
 	});
 });

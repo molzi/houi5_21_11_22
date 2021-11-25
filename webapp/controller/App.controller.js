@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Controller) {
 	"use strict";
 
-	return Controller.extend("at.clouddna.training00.FioriDeepDive.controller.App", {
+	return Controller.extend("at.clouddna.training0.FioriDeepDive.controller.App", {
 		_fragmentList: {},
 
 		onInit: function () {

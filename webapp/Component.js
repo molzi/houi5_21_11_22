@@ -1,11 +1,11 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"at/clouddna/training00/FioriDeepDive/model/models"
+	"at/clouddna/training0/FioriDeepDive/model/models"
 ], function (UIComponent, Device, models) {
 	"use strict";
 
-	return UIComponent.extend("at.clouddna.training00.FioriDeepDive.Component", {
+	return UIComponent.extend("at.clouddna.training0.FioriDeepDive.Component", {
 
 		metadata: {
 			manifest: "json"

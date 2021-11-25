@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (Controller, History, Log) {
 	"use strict";
 
-	return Controller.extend("at.clouddna.training00.FioriDeepDive.controller.BaseController", {
+	return Controller.extend("at.clouddna.training0.FioriDeepDive.controller.BaseController", {
 		_sContentDensityClass: "",
 
 		getRouter: function () {
@@ -27,6 +27,15 @@ sap.ui.define([
 				}
 			}
 			return this._sContentDensityClass;
+		},
+
+		setDirtyState: function (bState) {
+			if (sap.ushell) {
+				sap.ushell.Container.setDirtyFlag(bState);
+				this.logInfo("Dirty flag set to " + bState ? "true" : "false");
+			} else {
+				this.logWarning("Cant set dirty flag: Not in Launchpad Mode");
+			}
 		},
 
 		onNavBack: function () {

@@ -1,7 +1,7 @@
 {
 	"_version": "1.12.0",
 	"sap.app": {
-		"id": "at.clouddna.training00.FioriDeepDive",
+		"id": "at.clouddna.training0.FioriDeepDive",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
@@ -42,7 +42,7 @@
 	"sap.ui5": {
 		"flexEnabled": false,
 		"rootView": {
-			"viewName": "at.clouddna.training00.FioriDeepDive.view.App",
+			"viewName": "at.clouddna.training0.FioriDeepDive.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "App"
@@ -63,7 +63,7 @@
 			"i18n": {
 				"type": "sap.ui.model.resource.ResourceModel",
 				"settings": {
-					"bundleName": "at.clouddna.training00.FioriDeepDive.i18n.i18n"
+					"bundleName": "at.clouddna.training0.FioriDeepDive.i18n.i18n"
 				}
 			},
 			"genderModel": {
@@ -93,7 +93,7 @@
 				"routerClass": "sap.m.routing.Router",
 				"viewType": "XML",
 				"async": true,
-				"viewPath": "at.clouddna.training00.FioriDeepDive.view",
+				"viewPath": "at.clouddna.training0.FioriDeepDive.view",
 				"controlAggregation": "pages",
 				"controlId": "app",
 				"clearControlAggregation": false

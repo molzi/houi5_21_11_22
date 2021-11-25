@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (Opa5) {
 	"use strict";
 
-	return Opa5.extend("at.clouddna.training00.FioriDeepDive.test.integration.arrangements.Startup", {
+	return Opa5.extend("at.clouddna.training0.FioriDeepDive.test.integration.arrangements.Startup", {
 
 		iStartMyApp: function (oOptionsParameter) {
 			var oOptions = oOptionsParameter || {};
@@ -14,7 +14,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "at.clouddna.training00.FioriDeepDive",
+					name: "at.clouddna.training0.FioriDeepDive",
 					async: true
 				},
 				hash: oOptions.hash,

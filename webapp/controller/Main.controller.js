@@ -1,10 +1,10 @@
 sap.ui.define([
-	"at/clouddna/training00/FioriDeepDive/controller/BaseController",
+	"at/clouddna/training0/FioriDeepDive/controller/BaseController",
 	"sap/m/MessageBox"
 ], function (BaseController, MessageBox) {
 	"use strict";
 
-	return BaseController.extend("at.clouddna.training00.FioriDeepDive.controller.Main", {
+	return BaseController.extend("at.clouddna.training0.FioriDeepDive.controller.Main", {
 
 		onInit: function () {
 			this.getRouter().getRoute("Main").attachPatternMatched(this._onPatternMatched, this);
@@ -38,14 +38,17 @@ sap.ui.define([
 			MessageBox.confirm(this.geti18nText("dialog.delete", []), {
 				onClose: function (sAction) {
 					if (sAction === MessageBox.Action.OK) {
+						this.getView().setBusy(true);
 						oModel.remove(sCustomerPath, {
 							success: function () {
 								MessageBox.success(this.geti18nText("dialog.delete.success"));
 								this.logInfo("Delete successful for " + sCustomerPath);
+								this.getView().setBusy(false);
 							}.bind(this),
 							error: function (oError) {
 								MessageBox.error(oError.message);
 								this.logError("Delete successful for " + sCustomerPath);
+								this.getView().setBusy(false);
 							}.bind(this)
 						});
 					}

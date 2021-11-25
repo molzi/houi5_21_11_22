@@ -1,5 +1,5 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
-	controllerName="at.clouddna.training00.FioriDeepDive.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml">
+	controllerName="at.clouddna.training0.FioriDeepDive.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page title="{i18n>title}" id="main_page">
 		<content>
 			<Table id="main_table" items="{/CustomerSet}">

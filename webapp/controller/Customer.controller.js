@@ -1,14 +1,14 @@
 sap.ui.define([
-	"at/clouddna/training00/FioriDeepDive/controller/BaseController",
+	"at/clouddna/training0/FioriDeepDive/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"sap/ui/core/Fragment",
-	"at/clouddna/training00/FioriDeepDive/formatter/formatter",
+	"at/clouddna/training0/FioriDeepDive/formatter/formatter",
 	"sap/ui/core/routing/History"
 ], function (BaseController, JSONModel, MessageBox, Fragment, formatter, History) {
 	"use strict";
 
-	return BaseController.extend("at.clouddna.training00.FioriDeepDive.controller.Customer", {
+	return BaseController.extend("at.clouddna.training0.FioriDeepDive.controller.Customer", {
 		//Properties
 		_fragmentList: {},
 		_sMode: "",
@@ -32,7 +32,23 @@ sap.ui.define([
 			if (sCustomerId !== "create") {
 				this._sMode = "display";
 				this._showCustomerFragment("DisplayCustomer");
-				this.getView().bindElement("/CustomerSet(guid'" + sCustomerId + "')");
+				this.getView().bindElement({
+					path: "/CustomerSet(guid'" + sCustomerId + "')",
+					events: {
+						dataRequested: function () {
+							this.logInfo(`Customer ${sCustomerId} was requested`);
+							this.getView().setBusy(true);
+						}.bind(this),
+						dataReceived: function (oData) {
+							if (oData.getParameter("data")) {
+								this.logInfo(`Customer ${sCustomerId} was recieved`);
+							} else {
+								this.logError(`Customer ${sCustomerId} was not found`);
+							}
+							this.getView().setBusy(false);
+						}.bind(this)
+					}
+				});
 			} else {
 				this._sMode = "create";
 
@@ -78,6 +94,7 @@ sap.ui.define([
 		},
 
 		onSavePress: function (oEvent) {
+			this.getView().setBusy(true);
 			if (this._sMode === "create") {
 				let oModel = this.getModel(),
 					oCreateData = this.getModel("createModel").getData();
@@ -86,6 +103,7 @@ sap.ui.define([
 					success: function (oData, response) {
 						MessageBox.success(this.geti18nText("dialog.create.success"), {
 							onClose: function () {
+								this.getView().setBusy(false);
 								this.onNavBack();
 							}.bind(this)
 						});
@@ -93,6 +111,7 @@ sap.ui.define([
 					error: function (oError) {
 						MessageBox.error(oError.message, {
 							onClose: function () {
+								this.getView().setBusy(false);
 								this.onNavBack();
 							}.bind(this)
 						});
@@ -100,10 +119,18 @@ sap.ui.define([
 				});
 			} else {
 				if (this.getModel().hasPendingChanges()) {
-					this.getModel().submitChanges();
-					MessageBox.information(this.geti18nText("dialog.update.success"));
+					this.getModel().submitChanges({
+						success: function (oData, response) {
+							MessageBox.information(this.geti18nText("dialog.update.success"));
+							this.getView().setBusy(false);
+						}.bind(this),
+						error: function (oError) {
+							MessageBox.error(this.geti18nText("dialog.update.error"));
+							this.getView().setBusy(false);
+						}.bind(this)
+					});
 				} else {
-
+					this.getView().setBusy(false);
 				}
 				this._toggleEdit(false);
 			}
@@ -116,6 +143,7 @@ sap.ui.define([
 			let oEditModel = this.getModel("editModel");
 
 			oEditModel.setProperty("/editmode", bEditMode);
+			this.setDirtyState(bEditMode);
 
 			this._showCustomerFragment(bEditMode ? "EditCustomer" : "DisplayCustomer");
 		},
@@ -129,7 +157,7 @@ sap.ui.define([
 			} else {
 				Fragment.load({
 					id: this.getView().createId(sFragmentName),
-					name: "at.clouddna.training00.FioriDeepDive.view." + sFragmentName,
+					name: "at.clouddna.training0.FioriDeepDive.view." + sFragmentName,
 					controller: this
 				}).then(function (oFragment) {
 					this.logInfo(`Fragment ${sFragmentName} loaded`);
