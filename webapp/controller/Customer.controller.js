@@ -1,14 +1,14 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	"at/clouddna/training00/FioriDeepDive/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/MessageBox",
 	"sap/ui/core/Fragment",
 	"at/clouddna/training00/FioriDeepDive/formatter/formatter",
 	"sap/ui/core/routing/History"
-], function (Controller, JSONModel, MessageBox, Fragment, formatter, History) {
+], function (BaseController, JSONModel, MessageBox, Fragment, formatter, History) {
 	"use strict";
 
-	return Controller.extend("at.clouddna.training00.FioriDeepDive.controller.Customer", {
+	return BaseController.extend("at.clouddna.training00.FioriDeepDive.controller.Customer", {
 		//Properties
 		_fragmentList: {},
 		_sMode: "",
@@ -18,8 +18,7 @@ sap.ui.define([
 
 		//View initialization----------------------------------------------------------------------------------
 		onInit: function () {
-			let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.getRoute("Customer").attachPatternMatched(this._onPatternMatched, this);
+			this.getRouter().getRoute("Customer").attachPatternMatched(this._onPatternMatched, this);
 		},
 
 		_onPatternMatched: function (oEvent) {
@@ -28,7 +27,7 @@ sap.ui.define([
 				}),
 				sCustomerId = oEvent.getParameter("arguments").customerid;
 
-			this.getView().setModel(oEditModel, "editModel");
+			this.setModel(oEditModel, "editModel");
 
 			if (sCustomerId !== "create") {
 				this._sMode = "display";
@@ -47,7 +46,7 @@ sap.ui.define([
 					Website: ""
 				});
 
-				this.getView().setModel(createModel, "createModel");
+				this.setModel(createModel, "createModel");
 				oEditModel.setProperty("/editmode", true);
 
 				this._showCustomerFragment("CreateCustomer");
@@ -56,30 +55,15 @@ sap.ui.define([
 
 		//Button Handler-------------------------------------------------------------------------
 
-		onNavBack: function () {
-			let oHistory = History.getInstance(),
-				sPreviousHash = oHistory.getPreviousHash();
-
-			if (sPreviousHash !== undefined) {
-				window.history.go(-1);
-			} else {
-				let oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-
-				oRouter.navTo("Main", true);
-			}
-		},
-
 		onCancelPress: function (oEvent) {
-			let oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-
-			MessageBox.confirm(oBundle.getText("dialog.cancel"), {
+			MessageBox.confirm(this.geti18nText("dialog.cancel"), {
 				onClose: function (sAction) {
 					if (sAction === MessageBox.Action.OK) {
 						if (this._sMode === "create") {
 							this.onNavBack();
 						} else {
-							if (this.getView().getModel().hasPendingChanges()) {
-								this.getView().getModel().resetChanges();
+							if (this.getModel().hasPendingChanges()) {
+								this.getModel().resetChanges();
 							}
 
 							this._toggleEdit(false);
@@ -94,15 +78,13 @@ sap.ui.define([
 		},
 
 		onSavePress: function (oEvent) {
-			let oBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
-
 			if (this._sMode === "create") {
-				let oModel = this.getView().getModel(),
-					oCreateData = this.getView().getModel("createModel").getData();
+				let oModel = this.getModel(),
+					oCreateData = this.getModel("createModel").getData();
 
 				oModel.create("/CustomerSet", oCreateData, {
 					success: function (oData, response) {
-						MessageBox.success(oBundle.getText("dialog.create.success"), {
+						MessageBox.success(this.geti18nText("dialog.create.success"), {
 							onClose: function () {
 								this.onNavBack();
 							}.bind(this)
@@ -117,9 +99,9 @@ sap.ui.define([
 					}.bind(this)
 				});
 			} else {
-				if (this.getView().getModel().hasPendingChanges()) {
-					this.getView().getModel().submitChanges();
-					MessageBox.information(oBundle.getText("dialog.update.success"));
+				if (this.getModel().hasPendingChanges()) {
+					this.getModel().submitChanges();
+					MessageBox.information(this.geti18nText("dialog.update.success"));
 				} else {
 
 				}
@@ -131,7 +113,7 @@ sap.ui.define([
 		//Edit/Display toggle----------------------------------------------------------------------------
 
 		_toggleEdit: function (bEditMode) {
-			let oEditModel = this.getView().getModel("editModel");
+			let oEditModel = this.getModel("editModel");
 
 			oEditModel.setProperty("/editmode", bEditMode);
 
@@ -150,6 +132,8 @@ sap.ui.define([
 					name: "at.clouddna.training00.FioriDeepDive.view." + sFragmentName,
 					controller: this
 				}).then(function (oFragment) {
+					this.logInfo(`Fragment ${sFragmentName} loaded`);
+
 					this._fragmentList[sFragmentName] = oFragment;
 					oPage.insertContent(oFragment);
 				}.bind(this));
