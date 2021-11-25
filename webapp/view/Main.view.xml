@@ -13,7 +13,7 @@
 						<Button id="main_button_create" text="{i18n>button.add}" press="onNewCustomerPress"/>
 					</OverflowToolbar>
 				</smartTable:customToolbar>
-				<Table>
+				<Table sticky="ColumnHeaders">
 					<columns>
 						<Column id="main_column_delete">
 							<customData>
