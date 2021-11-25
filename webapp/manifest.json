@@ -18,7 +18,17 @@
 				"uri": "/sap/opu/odata/sap/ZHOUI5_CUSTOMER_SRV/",
 				"type": "OData",
 				"settings": {
-					"localUri": "localService/metadata.xml"
+					"localUri": "localService/metadata.xml",
+					"annotations": [
+						"houi5annotations"
+					]
+				}
+			},
+			"houi5annotations": {
+				"type": "ODataAnnotation",
+				"uri": "houi5annotations.xml",
+				"settings": {
+					"localUri": "houi5annotations.xml"
 				}
 			}
 		}
@@ -81,12 +91,18 @@
 				},
 				"dataSource": "ZHOUI5_CUSTOMER_SRV",
 				"preload": true
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -98,23 +114,33 @@
 				"controlId": "app",
 				"clearControlAggregation": false
 			},
-			"routes": [{
-				"name": "RouteApp",
-				"pattern": "RouteApp",
-				"target": ["TargetApp"]
-			}, {
-				"name": "Main",
-				"pattern": "",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["Main"]
-			}, {
-				"name": "Customer",
-				"pattern": "customer/{customerid}",
-				"titleTarget": "",
-				"greedy": false,
-				"target": ["Customer"]
-			}],
+			"routes": [
+				{
+					"name": "RouteApp",
+					"pattern": "RouteApp",
+					"target": [
+						"TargetApp"
+					]
+				},
+				{
+					"name": "Main",
+					"pattern": "",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"Main"
+					]
+				},
+				{
+					"name": "Customer",
+					"pattern": "customer/{customerid}",
+					"titleTarget": "",
+					"greedy": false,
+					"target": [
+						"Customer"
+					]
+				}
+			],
 			"targets": {
 				"TargetApp": {
 					"viewType": "XML",

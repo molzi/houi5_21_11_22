@@ -1,60 +1,90 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
-	controllerName="at.clouddna.training0.FioriDeepDive.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" controllerName="at.clouddna.training0.FioriDeepDive.controller.Main"
+	xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page title="{i18n>title}" id="main_page">
 		<content>
-			<Table id="main_table" items="{/CustomerSet}">
-				<headerToolbar>
-					<Toolbar>
-						<Title text="{i18n>main.table.title}"/>
+			<!-- Smart Control Declaration -->
+			<smartFilterBar:SmartFilterBar id="main_smartfilterbar" entitySet="CustomerSet"></smartFilterBar:SmartFilterBar>
+			<smartTable:SmartTable id="main_smarttable" smartFilterId="main_smartfilterbar" entitySet="CustomerSet" header="{i18n>main.table.title}"
+				tableType="ResponsiveTable" class="sapUiResponsiveContentPadding" enableAutoBinding="true">
+				<smartTable:customToolbar>
+					<OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
 						<Button id="main_button_create" text="{i18n>button.add}" press="onNewCustomerPress"/>
-					</Toolbar>
-				</headerToolbar>
-				<columns>
-					<Column id="main_column_firstname">
-						<Text text="{i18n>app.firstname}"/>
-					</Column>
-					<Column id="main_column_lastname">
-						<Text text="{i18n>app.lastname}"/>
-					</Column>
-					<Column id="main_column_title" minScreenWidth="Tablet">
-						<Text text="{i18n>app.title}"/>
-					</Column>
-					<Column id="main_column_gender" minScreenWidth="Tablet">
-						<Text text="{i18n>app.gender}"/>
-					</Column>
-					<Column id="main_column_email" demandPopin="true" minScreenWidth="Desktop">
-						<Text text="{i18n>app.email}"/>
-					</Column>
-					<Column id="main_column_phone">
-						<Text text="{i18n>app.phone}"/>
-					</Column>
-					<Column id="main_column_website">
-						<Text text="{i18n>app.website}"/>
-					</Column>
-					<Column id="main_column_delete">
-						<Text text="{i18n>app.delete}"/>
-					</Column>
-				</columns>
-				<items>
-					<ColumnListItem type="Navigation" press="onCustomerPress">
-						<cells>
-							<Text text="{Firstname}"/>
-							<Text text="{Lastname}"/>
-							<Text text="{AcademicTitle}"/>
-							<Text text="{Gender}"/>
-							<Text text="{Email}"/>
-							<Text text="{Phone}"/>
-							<Link text="{Website}" href="https://{Website}" target="_blank"/>
-							<Button press="onDeleteCustomerPress" icon="sap-icon://delete">
-								<customData>
-									<core:CustomData key="firstname" value="{Firstname}"/>
-								</customData>
-							</Button>
-						</cells>
-					</ColumnListItem>
-				</items>
-			</Table>
+					</OverflowToolbar>
+				</smartTable:customToolbar>
+				<Table>
+					<columns>
+						<Column id="main_column_delete">
+							<customData>
+								<core:CustomData key="p13nData" value='\{"columnKey": "main_column_delete", "columnIndex": "99"}'/>
+							</customData>
+							<Text text="{i18n>app.delete}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press="onCustomerPress">
+							<cells>
+								<Button press="onDeleteCustomerPress" icon="sap-icon://delete"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</smartTable:SmartTable>
+			<!-- Normal Table Declaration-->
+			<!--<Table id="main_table" items="{/CustomerSet}">-->
+			<!--	<headerToolbar>-->
+			<!--		<Toolbar>-->
+			<!--			<Title text="{i18n>main.table.title}"/>-->
+			<!--			<ToolbarSpacer/>-->
+			<!--			<Button id="main_button_create" text="{i18n>button.add}" press="onNewCustomerPress"/>-->
+			<!--		</Toolbar>-->
+			<!--	</headerToolbar>-->
+			<!--	<columns>-->
+			<!--		<Column id="main_column_firstname">-->
+			<!--			<Text text="{i18n>app.firstname}"/>-->
+			<!--		</Column>-->
+			<!--		<Column id="main_column_lastname">-->
+			<!--			<Text text="{i18n>app.lastname}"/>-->
+			<!--		</Column>-->
+			<!--		<Column id="main_column_title" minScreenWidth="Tablet">-->
+			<!--			<Text text="{i18n>app.title}"/>-->
+			<!--		</Column>-->
+			<!--		<Column id="main_column_gender" minScreenWidth="Tablet">-->
+			<!--			<Text text="{i18n>app.gender}"/>-->
+			<!--		</Column>-->
+			<!--		<Column id="main_column_email" demandPopin="true" minScreenWidth="Desktop">-->
+			<!--			<Text text="{i18n>app.email}"/>-->
+			<!--		</Column>-->
+			<!--		<Column id="main_column_phone">-->
+			<!--			<Text text="{i18n>app.phone}"/>-->
+			<!--		</Column>-->
+			<!--		<Column id="main_column_website">-->
+			<!--			<Text text="{i18n>app.website}"/>-->
+			<!--		</Column>-->
+			<!--		<Column id="main_column_delete">-->
+			<!--			<Text text="{i18n>app.delete}"/>-->
+			<!--		</Column>-->
+			<!--	</columns>-->
+			<!--	<items>-->
+			<!--		<ColumnListItem type="Navigation" press="onCustomerPress">-->
+			<!--			<cells>-->
+			<!--				<Text text="{Firstname}"/>-->
+			<!--				<Text text="{Lastname}"/>-->
+			<!--				<Text text="{AcademicTitle}"/>-->
+			<!--				<Text text="{Gender}"/>-->
+			<!--				<Text text="{Email}"/>-->
+			<!--				<Text text="{Phone}"/>-->
+			<!--				<Link text="{Website}" href="https://{Website}" target="_blank"/>-->
+			<!--				<Button press="onDeleteCustomerPress" icon="sap-icon://delete">-->
+			<!--					<customData>-->
+			<!--						<core:CustomData key="firstname" value="{Firstname}"/>-->
+			<!--					</customData>-->
+			<!--				</Button>-->
+			<!--			</cells>-->
+			<!--		</ColumnListItem>-->
+			<!--	</items>-->
+			<!--</Table>-->
 		</content>
 	</Page>
 </mvc:View>
